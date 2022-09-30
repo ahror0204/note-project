@@ -1,0 +1,114 @@
+definitions:
+  v1.NoteStruct:
+    properties:
+      body:
+        type: string
+      created_at:
+        type: string
+      deleted_at:
+        type: string
+      exp_time:
+        type: string
+      id:
+        type: string
+      title:
+        type: string
+      updated_at:
+        type: string
+    type: object
+info:
+  contact: {}
+paths:
+  /v1/createnote:
+    post:
+      consumes:
+      - application/json
+      description: This api for Creating Note
+      parameters:
+      - description: note body
+        in: body
+        name: note
+        required: true
+        schema:
+          $ref: '#/definitions/v1.NoteStruct'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            type: string
+      summary: Create Note
+      tags:
+      - Note
+  /v1/deletenote/{id}:
+    delete:
+      consumes:
+      - application/json
+      description: This api for deleting note
+      parameters:
+      - description: Note ID
+        in: path
+        name: id
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            type: string
+      summary: Delete Note
+      tags:
+      - Note
+  /v1/notes:
+    post:
+      consumes:
+      - application/json
+      description: This api for Seting Notes
+      parameters:
+      - description: exptime
+        in: query
+        name: exptime
+        required: true
+        type: integer
+      - description: note body
+        in: body
+        name: note
+        required: true
+        schema:
+          $ref: '#/definitions/v1.NoteStruct'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            type: string
+      summary: Set Note
+      tags:
+      - Note
+  /v1/updatenote:
+    put:
+      consumes:
+      - application/json
+      description: This api for Updating Note
+      parameters:
+      - description: note body
+        in: body
+        name: note
+        required: true
+        schema:
+          $ref: '#/definitions/v1.NoteStruct'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            type: string
+      summary: Update Note
+      tags:
+      - Note
+swagger: "2.0"
