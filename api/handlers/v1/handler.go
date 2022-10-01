@@ -9,29 +9,33 @@ import (
 	"github.com/note_project/api/token"
 	"github.com/note_project/config"
 	"github.com/note_project/pkg/logger"
+	"github.com/note_project/pkg/structures"
 	"github.com/note_project/storage/repo"
 )
 
 type handlerV1 struct {
 	log             logger.Logger
 	cfg             config.Config
+	userStorage     repo.UserRepositoryStorage
 	postgresStorage repo.NoteRepositoryStorage
 	redisStorage    repo.RedisRepositoryStorage
 	jwtHandler      token.JWTHandler
 }
 
 type HandlerV1Config struct {
-	Logger     logger.Logger
-	Cfg        config.Config
-	Postgres   repo.NoteRepositoryStorage
-	Redis      repo.RedisRepositoryStorage
-	jwtHandler token.JWTHandler
+	Logger      logger.Logger
+	Cfg         config.Config
+	UserStorage repo.UserRepositoryStorage
+	Postgres    repo.NoteRepositoryStorage
+	Redis       repo.RedisRepositoryStorage
+	jwtHandler  token.JWTHandler
 }
 
 func New(c *HandlerV1Config) *handlerV1 {
 	return &handlerV1{
 		log:             c.Logger,
 		cfg:             c.Cfg,
+		userStorage:     c.UserStorage,
 		postgresStorage: c.Postgres,
 		redisStorage:    c.Redis,
 		jwtHandler:      c.jwtHandler,
@@ -41,7 +45,7 @@ func New(c *HandlerV1Config) *handlerV1 {
 func CheckClaims(h *handlerV1, c *gin.Context) jwt.MapClaims {
 	var (
 		ErrUnauthorized = errors.New("unauthorized")
-		authorization   JwtRequestModel
+		authorization   structures.JwtRequestModel
 		claims          jwt.MapClaims
 		err             error
 	)

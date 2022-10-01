@@ -43,6 +43,7 @@ func main() {
 
 		Conf:      cfg,
 		Logger:    log,
+		Users: postgres.NewUserRepo(connDB),
 		Postgres:  postgres.NewnoteRepo(connDB),
 		RedisRepo: redisRepo,
 	})

@@ -17,6 +17,7 @@ type Option struct {
 	DB        *sqlx.DB
 	Conf      config.Config
 	Logger    logger.Logger
+	Users     repo.UserRepositoryStorage
 	Postgres  repo.NoteRepositoryStorage
 	RedisRepo repo.RedisRepositoryStorage
 }
@@ -28,18 +29,23 @@ func New(option Option) *gin.Engine {
 	router.Use(gin.Recovery())
 
 	handlerV1 := v1.New(&v1.HandlerV1Config{
-		Cfg:      option.Conf,
-		Logger:   option.Logger,
-		Postgres: option.Postgres,
-		Redis:    option.RedisRepo,
+		Cfg:         option.Conf,
+		Logger:      option.Logger,
+		UserStorage: option.Users,
+		Postgres:    option.Postgres,
+		Redis:       option.RedisRepo,
 	})
 
 	api := router.Group("/v1")
 
-	api.POST("/notes", handlerV1.SetNoteWithTTL)
-	api.POST("/createnote", handlerV1.CreateNote)
-	api.PUT("/updatenote", handlerV1.UpdateNote)
+	api.POST("/notes/", handlerV1.SetNoteWithTTL)
+	api.POST("/createnote/", handlerV1.CreateNote)
+	api.PUT("/updatenote/", handlerV1.UpdateNote)
 	api.DELETE("/deletenote/:id", handlerV1.DeleteNote)
+
+	api.POST("/create_user/", handlerV1.CreateUser)
+	api.POST("/update_user/", handlerV1.UpdateUser)
+	api.DELETE("/delete_user/:id", handlerV1.DeleteUser)
 
 	url := ginSwagger.URL("swagger/doc.json")
 	router.GET("/swagger/*any", ginSwagger.WrapHandler(swaggerFiles.Handler, url))

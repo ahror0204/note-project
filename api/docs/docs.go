@@ -16,7 +16,41 @@ const docTemplate = `{
     "host": "{{.Host}}",
     "basePath": "{{.BasePath}}",
     "paths": {
-        "/v1/createnote": {
+        "/v1/create_user/": {
+            "post": {
+                "description": "This API for creating user",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Users"
+                ],
+                "summary": "Create user",
+                "parameters": [
+                    {
+                        "description": "user",
+                        "name": "user",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/structures.UserStruct"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/structures.UserStruct"
+                        }
+                    }
+                }
+            }
+        },
+        "/v1/createnote/": {
             "post": {
                 "description": "This api for Creating Note",
                 "consumes": [
@@ -36,8 +70,40 @@ const docTemplate = `{
                         "in": "body",
                         "required": true,
                         "schema": {
-                            "$ref": "#/definitions/v1.NoteStruct"
+                            "$ref": "#/definitions/structures.NoteStruct"
                         }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                }
+            }
+        },
+        "/v1/delete_user/{id}": {
+            "delete": {
+                "description": "This API for deleting user",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Users"
+                ],
+                "summary": "Delete user",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "user id",
+                        "name": "id",
+                        "in": "path",
+                        "required": true
                     }
                 ],
                 "responses": {
@@ -52,7 +118,7 @@ const docTemplate = `{
         },
         "/v1/deletenote/{id}": {
             "delete": {
-                "description": "This api for deleting note",
+                "description": "This API for deleting note",
                 "consumes": [
                     "application/json"
                 ],
@@ -82,7 +148,7 @@ const docTemplate = `{
                 }
             }
         },
-        "/v1/notes": {
+        "/v1/notes/": {
             "post": {
                 "description": "This api for Seting Notes",
                 "consumes": [
@@ -109,7 +175,7 @@ const docTemplate = `{
                         "in": "body",
                         "required": true,
                         "schema": {
-                            "$ref": "#/definitions/v1.NoteStruct"
+                            "$ref": "#/definitions/structures.NoteStruct"
                         }
                     }
                 ],
@@ -123,7 +189,41 @@ const docTemplate = `{
                 }
             }
         },
-        "/v1/updatenote": {
+        "/v1/update_user/": {
+            "post": {
+                "description": "This API for updating user",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Users"
+                ],
+                "summary": "Update user",
+                "parameters": [
+                    {
+                        "description": "update user",
+                        "name": "user",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/structures.UserStruct"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                }
+            }
+        },
+        "/v1/updatenote/": {
             "put": {
                 "description": "This api for Updating Note",
                 "consumes": [
@@ -143,7 +243,7 @@ const docTemplate = `{
                         "in": "body",
                         "required": true,
                         "schema": {
-                            "$ref": "#/definitions/v1.NoteStruct"
+                            "$ref": "#/definitions/structures.NoteStruct"
                         }
                     }
                 ],
@@ -159,7 +259,7 @@ const docTemplate = `{
         }
     },
     "definitions": {
-        "v1.NoteStruct": {
+        "structures.NoteStruct": {
             "type": "object",
             "properties": {
                 "body": {
@@ -178,6 +278,32 @@ const docTemplate = `{
                     "type": "string"
                 },
                 "title": {
+                    "type": "string"
+                },
+                "updated_at": {
+                    "type": "string"
+                }
+            }
+        },
+        "structures.UserStruct": {
+            "type": "object",
+            "properties": {
+                "created_at": {
+                    "type": "string"
+                },
+                "deleted_at": {
+                    "type": "string"
+                },
+                "email": {
+                    "type": "string"
+                },
+                "first_name": {
+                    "type": "string"
+                },
+                "id": {
+                    "type": "string"
+                },
+                "last_name": {
                     "type": "string"
                 },
                 "updated_at": {

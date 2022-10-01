@@ -17,11 +17,11 @@ import (
 //@Accept json
 //@Produce json
 //@param exptime query int true "exptime"
-//@Param note body NoteStruct true "note body"
+//@Param note body structures.NoteStruct true "note body"
 //@Success 200 {string} Success
-//@Router /v1/notes [post]
+//@Router /v1/notes/ [post]
 func (h handlerV1) SetNoteWithTTL(c *gin.Context) {
-	var note NoteStruct
+	var note structures.NoteStruct
 
 	exptime := c.Query("exptime")
 
@@ -65,9 +65,9 @@ func (h handlerV1) SetNoteWithTTL(c *gin.Context) {
 //@Tags Note
 //@Accept json
 //@Produce json
-//@Param note body NoteStruct true "note body"
+//@Param note body structures.NoteStruct true "note body"
 //@Success 200 {string} Success
-//@Router /v1/createnote [post]
+//@Router /v1/createnote/ [post]
 func (h handlerV1) CreateNote(c *gin.Context) {
 	var note structures.NoteStruct
 
@@ -97,9 +97,9 @@ func (h handlerV1) CreateNote(c *gin.Context) {
 //@Tags Note
 //@Accept json
 //@Produce json
-//@Param note body NoteStruct true "note body"
+//@Param note body structures.NoteStruct true "note body"
 //@Success 200 {string} Success
-//@Router /v1/updatenote [put]
+//@Router /v1/updatenote/ [put]
 func (h handlerV1) UpdateNote(c *gin.Context) {
 	var note structures.NoteStruct
 
@@ -125,7 +125,7 @@ func (h handlerV1) UpdateNote(c *gin.Context) {
 }
 
 //@Summary Delete Note
-//@Description This api for deleting note
+//@Description This API for deleting note
 //@Tags Note
 //@Accept json
 //@Produce json

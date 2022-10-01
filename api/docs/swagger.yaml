@@ -1,5 +1,5 @@
 definitions:
-  v1.NoteStruct:
+  structures.NoteStruct:
     properties:
       body:
         type: string
@@ -16,10 +16,49 @@ definitions:
       updated_at:
         type: string
     type: object
+  structures.UserStruct:
+    properties:
+      created_at:
+        type: string
+      deleted_at:
+        type: string
+      email:
+        type: string
+      first_name:
+        type: string
+      id:
+        type: string
+      last_name:
+        type: string
+      updated_at:
+        type: string
+    type: object
 info:
   contact: {}
 paths:
-  /v1/createnote:
+  /v1/create_user/:
+    post:
+      consumes:
+      - application/json
+      description: This API for creating user
+      parameters:
+      - description: user
+        in: body
+        name: user
+        required: true
+        schema:
+          $ref: '#/definitions/structures.UserStruct'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/structures.UserStruct'
+      summary: Create user
+      tags:
+      - Users
+  /v1/createnote/:
     post:
       consumes:
       - application/json
@@ -30,7 +69,7 @@ paths:
         name: note
         required: true
         schema:
-          $ref: '#/definitions/v1.NoteStruct'
+          $ref: '#/definitions/structures.NoteStruct'
       produces:
       - application/json
       responses:
@@ -41,11 +80,32 @@ paths:
       summary: Create Note
       tags:
       - Note
+  /v1/delete_user/{id}:
+    delete:
+      consumes:
+      - application/json
+      description: This API for deleting user
+      parameters:
+      - description: user id
+        in: path
+        name: id
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            type: string
+      summary: Delete user
+      tags:
+      - Users
   /v1/deletenote/{id}:
     delete:
       consumes:
       - application/json
-      description: This api for deleting note
+      description: This API for deleting note
       parameters:
       - description: Note ID
         in: path
@@ -62,7 +122,7 @@ paths:
       summary: Delete Note
       tags:
       - Note
-  /v1/notes:
+  /v1/notes/:
     post:
       consumes:
       - application/json
@@ -78,7 +138,7 @@ paths:
         name: note
         required: true
         schema:
-          $ref: '#/definitions/v1.NoteStruct'
+          $ref: '#/definitions/structures.NoteStruct'
       produces:
       - application/json
       responses:
@@ -89,7 +149,29 @@ paths:
       summary: Set Note
       tags:
       - Note
-  /v1/updatenote:
+  /v1/update_user/:
+    post:
+      consumes:
+      - application/json
+      description: This API for updating user
+      parameters:
+      - description: update user
+        in: body
+        name: user
+        required: true
+        schema:
+          $ref: '#/definitions/structures.UserStruct'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            type: string
+      summary: Update user
+      tags:
+      - Users
+  /v1/updatenote/:
     put:
       consumes:
       - application/json
@@ -100,7 +182,7 @@ paths:
         name: note
         required: true
         schema:
-          $ref: '#/definitions/v1.NoteStruct'
+          $ref: '#/definitions/structures.NoteStruct'
       produces:
       - application/json
       responses:
