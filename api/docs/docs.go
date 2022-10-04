@@ -189,6 +189,37 @@ const docTemplate = `{
                 }
             }
         },
+        "/v1/register/": {
+            "post": {
+                "description": "This API for registration new user",
+                "consumes": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Users"
+                ],
+                "summary": "Register User",
+                "parameters": [
+                    {
+                        "description": "user body",
+                        "name": "user",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/structures.UserStruct"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                }
+            }
+        },
         "/v1/update_user/": {
             "post": {
                 "description": "This API for updating user",
@@ -256,9 +287,54 @@ const docTemplate = `{
                     }
                 }
             }
+        },
+        "/v1/users/verify_user/": {
+            "post": {
+                "description": "This api for sending email code to user",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Users"
+                ],
+                "summary": "Verify User",
+                "parameters": [
+                    {
+                        "description": "user body",
+                        "name": "user",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/structures.EmailVer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                }
+            }
         }
     },
     "definitions": {
+        "structures.EmailVer": {
+            "type": "object",
+            "properties": {
+                "email": {
+                    "type": "string"
+                },
+                "email_code": {
+                    "type": "string"
+                }
+            }
+        },
         "structures.NoteStruct": {
             "type": "object",
             "properties": {
@@ -297,6 +373,9 @@ const docTemplate = `{
                 "email": {
                     "type": "string"
                 },
+                "email_code": {
+                    "type": "string"
+                },
                 "first_name": {
                     "type": "string"
                 },
@@ -306,7 +385,13 @@ const docTemplate = `{
                 "last_name": {
                     "type": "string"
                 },
+                "password": {
+                    "type": "string"
+                },
                 "updated_at": {
+                    "type": "string"
+                },
+                "user_name": {
                     "type": "string"
                 }
             }

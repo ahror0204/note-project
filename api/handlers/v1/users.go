@@ -90,3 +90,4 @@ func (h handlerV1) DeleteUser(c *gin.Context) {
 		c.JSON(http.StatusOK, "Deleted")
 	}
 }
+

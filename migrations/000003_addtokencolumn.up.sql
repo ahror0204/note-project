@@ -1,0 +1,9 @@
+ALTER TABLE users
+    ADD COLUMN password VARCHAR(50) NOT NULL,
+    ADD COLUMN user_name VARCHAR(100) NOT NULL;
+
+ALTER TABLE users
+    ALTER COLUMN email SET NOT NULL;  
+ 
+ALTER TABLE users
+    ADD CONSTRAINT email_unq UNIQUE(email);

@@ -1,4 +1,11 @@
 definitions:
+  structures.EmailVer:
+    properties:
+      email:
+        type: string
+      email_code:
+        type: string
+    type: object
   structures.NoteStruct:
     properties:
       body:
@@ -24,13 +31,19 @@ definitions:
         type: string
       email:
         type: string
+      email_code:
+        type: string
       first_name:
         type: string
       id:
         type: string
       last_name:
         type: string
+      password:
+        type: string
       updated_at:
+        type: string
+      user_name:
         type: string
     type: object
 info:
@@ -149,6 +162,26 @@ paths:
       summary: Set Note
       tags:
       - Note
+  /v1/register/:
+    post:
+      consumes:
+      - application/json
+      description: This API for registration new user
+      parameters:
+      - description: user body
+        in: body
+        name: user
+        required: true
+        schema:
+          $ref: '#/definitions/structures.UserStruct'
+      responses:
+        "200":
+          description: OK
+          schema:
+            type: string
+      summary: Register User
+      tags:
+      - Users
   /v1/update_user/:
     post:
       consumes:
@@ -193,4 +226,26 @@ paths:
       summary: Update Note
       tags:
       - Note
+  /v1/users/verify_user/:
+    post:
+      consumes:
+      - application/json
+      description: This api for sending email code to user
+      parameters:
+      - description: user body
+        in: body
+        name: user
+        required: true
+        schema:
+          $ref: '#/definitions/structures.EmailVer'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            type: string
+      summary: Verify User
+      tags:
+      - Users
 swagger: "2.0"

@@ -1,6 +1,7 @@
 package postgres
 
 import (
+	"errors"
 	"time"
 
 	"github.com/gofrs/uuid"
@@ -64,4 +65,29 @@ func (r *userRepo) DeleteUser(ID string) error {
 		return err
 	}
 	return nil
+}
+
+func (r *userRepo) CheckField(req structures.UserCheckRequest) (bool, error) {
+	
+	var count int
+	if req.Field == "username" {
+		err := r.db.QueryRow("SELECT COUNT(1) FROM users WHERE user_name = $1 AND deleted_at = NULL", req.Value).Scan(&count)
+		if err != nil {
+			return false, err
+		}
+	} else if req.Field == "email" {
+		err := r.db.QueryRow("SELECT COUNT(1) FROM users WHERE email = $1 AND deleted_at = NULL", req.Value).Scan(&count)
+		if err != nil {
+			return false, err
+		}
+	} else {
+		err := errors.New("CheckField func error!")
+			return false, err
+	}
+
+	if count == 0 {
+		return false, nil
+	}
+
+	return true, nil
 }
